@@ -26,6 +26,12 @@ npm run build    # Produktions-Build inkl. TypeScript-Check — muss vor jedem C
 npm run preview  # Build lokal testen
 ```
 
+## Deployment
+
+- Live-App: https://marcel-fe.github.io/carlife-ai/ (GitHub Pages, öffentliches Repo `Marcel-Fe/carlife-ai`)
+- Jeder Push auf `master` deployt automatisch via `.github/workflows/deploy.yml` (Build mit `--base=/carlife-ai/`).
+- Router ist HashRouter — Pflicht für GitHub Pages, nicht auf BrowserRouter umstellen.
+
 ## Projektstruktur
 
 ```
