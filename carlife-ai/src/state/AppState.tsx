@@ -15,6 +15,8 @@ interface AppState {
   updateVehicle: (id: string, data: Partial<Vehicle>) => void
   addFuelEntry: (data: Omit<FuelEntry, 'id' | 'vehicleId'>) => void
   deleteFuelEntry: (id: string) => void
+  addCostEntry: (data: Omit<CostEntry, 'id' | 'vehicleId' | 'refId'>) => void
+  deleteCostEntry: (id: string) => void
 }
 
 const Ctx = createContext<AppState | null>(null)
@@ -65,7 +67,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         date: entry.date,
         category: 'fuel',
         amount: entry.totalPrice,
-        note: `Tanken ${entry.liters.toLocaleString('de-DE')} l`,
+        note: `${entry.liters.toLocaleString('de-DE')} l`,
         refId: entry.id,
       }
       const vehicles = db.vehicles.map((v) =>
@@ -92,6 +94,22 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     [db, persist],
   )
 
+  const addCostEntry = useCallback(
+    (data: Omit<CostEntry, 'id' | 'vehicleId' | 'refId'>) => {
+      if (!db.activeVehicleId) return
+      const entry: CostEntry = { ...data, id: newId(), vehicleId: db.activeVehicleId }
+      persist({ ...db, costEntries: [...db.costEntries, entry] })
+    },
+    [db, persist],
+  )
+
+  const deleteCostEntry = useCallback(
+    (id: string) => {
+      persist({ ...db, costEntries: db.costEntries.filter((c) => c.id !== id) })
+    },
+    [db, persist],
+  )
+
   const value = useMemo<AppState>(() => {
     const activeVehicle = db.vehicles.find((v) => v.id === db.activeVehicleId) ?? null
     const fuelEntries = db.fuelEntries
@@ -108,8 +126,19 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       updateVehicle,
       addFuelEntry,
       deleteFuelEntry,
+      addCostEntry,
+      deleteCostEntry,
     }
-  }, [db, setActiveVehicle, addVehicle, updateVehicle, addFuelEntry, deleteFuelEntry])
+  }, [
+    db,
+    setActiveVehicle,
+    addVehicle,
+    updateVehicle,
+    addFuelEntry,
+    deleteFuelEntry,
+    addCostEntry,
+    deleteCostEntry,
+  ])
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>
 }

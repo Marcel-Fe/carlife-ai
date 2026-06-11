@@ -41,3 +41,26 @@ export function saveDb(db: Db): void {
 export function newId(): string {
   return crypto.randomUUID()
 }
+
+export function exportJson(): string {
+  return JSON.stringify(loadDb(), null, 2)
+}
+
+/** Validates and imports a backup created by exportJson. Throws on invalid data. */
+export function importJson(raw: string): void {
+  const parsed = JSON.parse(raw) as Partial<Db>
+  if (
+    !parsed ||
+    !Array.isArray(parsed.vehicles) ||
+    !Array.isArray(parsed.fuelEntries) ||
+    !Array.isArray(parsed.costEntries)
+  ) {
+    throw new Error('Keine gültige CarLife-Sicherungsdatei')
+  }
+  saveDb({
+    vehicles: parsed.vehicles,
+    fuelEntries: parsed.fuelEntries,
+    costEntries: parsed.costEntries,
+    activeVehicleId: parsed.activeVehicleId ?? parsed.vehicles[0]?.id ?? null,
+  })
+}

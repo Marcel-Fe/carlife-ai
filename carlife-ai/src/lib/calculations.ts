@@ -84,6 +84,16 @@ export function monthlyCostSeries(
   return result
 }
 
+export function costsByCategory(costs: CostEntry[]): { category: string; amount: number }[] {
+  const sums = new Map<string, number>()
+  for (const c of costs) {
+    sums.set(c.category, (sums.get(c.category) ?? 0) + c.amount)
+  }
+  return [...sums.entries()]
+    .map(([category, amount]) => ({ category, amount }))
+    .sort((a, b) => b.amount - a.amount)
+}
+
 /**
  * Rule-based AutoScore (phase 1): rewards complete vehicle data and an
  * actively maintained fuel log. Becomes AI-assisted in later phases.

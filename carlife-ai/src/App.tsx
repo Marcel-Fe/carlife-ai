@@ -4,6 +4,7 @@ import { Layout } from './components/Layout'
 import { DashboardPage } from './pages/Dashboard'
 import { VehiclePage } from './pages/Vehicle'
 import { FuelLogPage } from './pages/FuelLog'
+import { CostsPage } from './pages/Costs'
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
             <Route path="/" element={<DashboardPage />} />
             <Route path="/fahrzeug" element={<VehiclePage />} />
             <Route path="/tankbuch" element={<FuelLogPage />} />
+            <Route path="/kosten" element={<CostsPage />} />
           </Route>
         </Routes>
       </HashRouter>

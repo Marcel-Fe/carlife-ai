@@ -4,6 +4,7 @@ import { Car, Camera, Pencil, Plus } from 'lucide-react'
 import { useAppState } from '../state/AppState'
 import type { FuelType, Vehicle } from '../types'
 import { fileToCompressedDataUrl } from '../lib/image'
+import { BackupCard } from '../components/BackupCard'
 import { formatDate, formatEuro, formatKm } from '../lib/format'
 import {
   Card,
@@ -307,6 +308,8 @@ export function VehiclePage() {
           ))}
         </dl>
       </Card>
+
+      <BackupCard />
 
       <div className="flex justify-center">
         <button
