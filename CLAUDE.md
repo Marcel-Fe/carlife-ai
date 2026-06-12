@@ -5,7 +5,7 @@ Vollständiges Produktkonzept: siehe `CONCEPT.md`. Diese Datei regelt, WIE hier 
 
 ## Projektstand & Roadmap
 
-- **Aktuelle Phase: 2 (MVP, in Arbeit)** — fertig: Kostenanalyse, JSON-Export/-Import, App-Icon + Web-Manifest (Homescreen-Installation). Offen: Wartungsmanager, Erinnerungen, Album, Service Worker (Offline), optional Supabase.
+- **Aktuelle Phase: 2 (MVP, in Arbeit)** — fertig: Kostenanalyse, Wartungsmanager (inkl. Rechnungsfotos), JSON-Export/-Import, App-Icon + Web-Manifest (Homescreen-Installation). Offen: Erinnerungen, Album, Service Worker (Offline), optional Supabase.
 - Phase 1 (Prototyp) abgeschlossen: Dashboard, Fahrzeugakte, Tankbuch; Daten in localStorage, kein Backend.
 - Phase 3 (KI): Claude API (Vision) über serverseitige Edge Function — API-Key niemals im Frontend.
 - Phase 4 (Premium): AutoScore-Gamification, Abo, Capacitor-Native-App.

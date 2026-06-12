@@ -1,4 +1,4 @@
-import type { CostEntry, FuelEntry, Vehicle } from '../types'
+import type { CostEntry, FuelEntry, MaintenanceEntry, Vehicle } from '../types'
 
 // Single place that touches localStorage. Swapped for a cloud backend in phase 2.
 
@@ -6,6 +6,7 @@ export interface Db {
   vehicles: Vehicle[]
   fuelEntries: FuelEntry[]
   costEntries: CostEntry[]
+  maintenanceEntries: MaintenanceEntry[]
   activeVehicleId: string | null
 }
 
@@ -15,6 +16,7 @@ const emptyDb: Db = {
   vehicles: [],
   fuelEntries: [],
   costEntries: [],
+  maintenanceEntries: [],
   activeVehicleId: null,
 }
 
@@ -27,6 +29,7 @@ export function loadDb(): Db {
       vehicles: parsed.vehicles ?? [],
       fuelEntries: parsed.fuelEntries ?? [],
       costEntries: parsed.costEntries ?? [],
+      maintenanceEntries: parsed.maintenanceEntries ?? [],
       activeVehicleId: parsed.activeVehicleId ?? null,
     }
   } catch {
@@ -35,7 +38,16 @@ export function loadDb(): Db {
 }
 
 export function saveDb(db: Db): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(db))
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(db))
+  } catch (e) {
+    // localStorage quota (~5 MB) exceeded — most likely too many photos.
+    alert(
+      'Speicher voll: Die Änderung konnte nicht gespeichert werden. ' +
+        'Lösche alte Fotos oder lade vorher eine Sicherung herunter.',
+    )
+    throw e
+  }
 }
 
 export function newId(): string {
@@ -61,6 +73,7 @@ export function importJson(raw: string): void {
     vehicles: parsed.vehicles,
     fuelEntries: parsed.fuelEntries,
     costEntries: parsed.costEntries,
+    maintenanceEntries: parsed.maintenanceEntries ?? [],
     activeVehicleId: parsed.activeVehicleId ?? parsed.vehicles[0]?.id ?? null,
   })
 }

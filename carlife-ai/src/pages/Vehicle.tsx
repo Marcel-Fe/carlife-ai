@@ -126,7 +126,11 @@ function VehicleForm({
           />
         </Field>
         <Field label="Kraftstoff">
-          <Select value={form.fuelType} onChange={(e) => set('fuelType', e.target.value as FuelType)}>
+          <Select
+            aria-label="Kraftstoff"
+            value={form.fuelType}
+            onChange={(e) => set('fuelType', e.target.value as FuelType)}
+          >
             {Object.entries(fuelTypeLabels).map(([value, label]) => (
               <option key={value} value={value}>
                 {label}

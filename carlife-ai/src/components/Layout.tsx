@@ -16,10 +16,10 @@ const navItems = [
   { to: '/fahrzeug', label: 'Fahrzeug', icon: Car },
   { to: '/tankbuch', label: 'Tankbuch', icon: Fuel },
   { to: '/kosten', label: 'Kosten', icon: LineChart },
+  { to: '/wartung', label: 'Wartung', icon: Wrench },
 ]
 
 const upcoming = [
-  { label: 'Wartung', icon: Wrench },
   { label: 'Erinnerungen', icon: Bell },
   { label: 'Fahrzeugalbum', icon: Images },
   { label: 'KI-Scanner', icon: Sparkles },

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import type { FormEvent } from 'react'
-import { Fuel, LineChart, Trash2 } from 'lucide-react'
+import { Fuel, LineChart, Trash2, Wrench } from 'lucide-react'
 import {
   Bar,
   BarChart,
@@ -76,7 +76,11 @@ function AddCostForm() {
           <TextInput type="date" required value={date} onChange={(e) => setDate(e.target.value)} />
         </Field>
         <Field label="Kategorie">
-          <Select value={category} onChange={(e) => setCategory(e.target.value as CostCategory)}>
+          <Select
+            aria-label="Kategorie"
+            value={category}
+            onChange={(e) => setCategory(e.target.value as CostCategory)}
+          >
             {manualCategories.map((c) => (
               <option key={c} value={c}>
                 {categoryMeta[c].label}
@@ -269,9 +273,13 @@ export function CostsPage() {
                     {entry.refId ? (
                       <span
                         className="flex w-7 justify-center text-ink-soft/40"
-                        title="Aus dem Tankbuch — dort löschen"
+                        title={
+                          entry.category === 'fuel'
+                            ? 'Aus dem Tankbuch — dort löschen'
+                            : 'Aus dem Wartungsmanager — dort löschen'
+                        }
                       >
-                        <Fuel size={15} />
+                        {entry.category === 'fuel' ? <Fuel size={15} /> : <Wrench size={15} />}
                       </span>
                     ) : (
                       <button

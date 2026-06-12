@@ -38,17 +38,24 @@ export interface CostEntry {
   refId?: string // links auto-generated entries to their source (e.g. FuelEntry)
 }
 
-// Phase 2
+export type MaintenanceType =
+  | 'oil'
+  | 'brakes'
+  | 'tires'
+  | 'battery'
+  | 'inspection'
+  | 'other'
+
 export interface MaintenanceEntry {
   id: string
   vehicleId: string
   date: string
-  type: string
+  type: MaintenanceType
   km: number
   cost: number
   workshop: string
   note: string
-  photos: string[]
+  photos: string[] // compressed JPEG data URLs (receipts, work photos)
 }
 
 // Phase 2
